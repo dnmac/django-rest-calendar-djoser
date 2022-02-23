@@ -1,0 +1,17 @@
+{
+    "python.pythonPath": "env/bin/python",
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pycodestyleArgs": ["--max-line-length=88"],
+    "python.linting.pylintEnabled": false,
+    "python.linting.pydocstyleEnabled": false,
+    "python.linting.enabled": true,
+    // "python.linting.pydocstyleArgs": ["--ignore=D100,D101,D102,D106,D203,C0111"],
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--max-line-length=88",
+        "--disable=django-not-configured",
+        "--django-settings-module=project.settings",
+        "--disable=C0111"
+    ]
+  }
+
