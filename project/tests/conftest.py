@@ -33,8 +33,8 @@ def user_create_build(db, user_factory):
 
 
 @pytest.fixture
-def user_create(db, user_factory):
-    user = user_factory.build()
+def user_create_create(db, user_factory):
+    user = user_factory.create()
     return user
 
 

@@ -33,7 +33,7 @@ class UserUrlsTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.token = Token.objects.create(user=self.user)
@@ -64,7 +64,7 @@ class AdminUrlsTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123",
                                             is_staff=True
                                             )

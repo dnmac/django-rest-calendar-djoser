@@ -9,8 +9,8 @@ def test_calendar_name(calendar):
     automatically when user is created.
     """
     pprint(vars(calendar.user))
-    print(f'calendar_name: {calendar.name} == username: {calendar.user.username}')
-    assert calendar.__str__() == calendar.user.username
+    print(f'calendar_name: {calendar.name} == username: {calendar.user.email}')
+    assert calendar.__str__() == calendar.user.email
 
 
 @pytest.mark.usefixtures("current_week_create")

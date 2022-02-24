@@ -14,7 +14,7 @@ User = get_user_model()
 def create_calendar(instance, created, **kwargs):
 
     if created:
-        Calendar.objects.create(user=instance, name=instance.username)
+        Calendar.objects.create(user=instance, name=instance.email)
         print('User Calendar created!')
 
 

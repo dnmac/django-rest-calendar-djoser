@@ -27,15 +27,22 @@ def test_new_user(user_factory):
 
 def test_create_new_user(db, user_factory):
     user = user_factory.create()
-    print(user.username)
-    assert True
+    print(user.id)
+    assert user.id > 0
 
 
 def test_build_new_user(db, user_factory):
     user = user_factory.build()
-    print(user.username)
-    assert True
+    print(user.id)
+    assert user.id > 0
 
 
-def test_username_length(user_create):
-    assert len(user_create.username) >= 1
+def test_username_length(user_create_create):
+    assert len(user_create_create.email) >= 1
+
+@pytest.mark.usefixtures("user_create_create")
+def test_user_create(db, user_create_create):
+    user = user_create_create
+    pprint(vars(user))
+
+    assert user.id == user.id

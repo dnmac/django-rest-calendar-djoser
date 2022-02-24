@@ -2,6 +2,7 @@ import factory
 import factory.fuzzy
 import pytest
 from calendars.models import Calendar, Event, UserEvent, CurrentWeek, CurrentWeekEvent
+from accounts.models import CustomUser
 from faker import Faker
 from django.contrib.auth import get_user_model
 import uuid
@@ -20,15 +21,17 @@ def get_dates(start_date_str):
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = User
+        model = CustomUser
 
     id = fake.pyint(min_value=0, max_value=100, step=1)
-    username = fake.user_name()
     password = fake.password()
     email = fake.email()
     first_name = fake.first_name()
     last_name = fake.last_name()
+    sex = 'M'
+    phone_number = fake.phone_number()
     is_staff = False
+    is_active = True
 
 
 class CalendarFactory(factory.django.DjangoModelFactory):
@@ -60,7 +63,6 @@ class UserEventFactory(EventFactory, factory.django.DjangoModelFactory):
     class Meta:
         model = UserEvent
 
-    classification = 'RR'
     priority = 'A'
     type = 'AM'
 

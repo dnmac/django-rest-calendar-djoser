@@ -16,39 +16,24 @@ User = get_user_model()
 
 
 @pytest.mark.usefixtures("user_create_stub")
-class TestLogin:
-    """Tests login endpoint."""
-
-    client = APIClient()
-
-    def test_login(self, user_create_stub):
-        data = {
-            "username": user_create_stub.username,
-            "password": user_create_stub.password
-            }
-        response = self.client.post("http://127.0.0.1:8000/api-auth/login/", data=data)
-        print(f'Status code: {response.status_code}')
-        assert response.status_code == 200
-
-
-@pytest.mark.usefixtures("user_create_stub")
 class TestRegistration:
     """Tests registration process."""
 
     client = APIClient()
 
     def test_registration(self, user_create_stub):
-        # user = UserFactory.stub()
         user = user_create_stub
         data = {
-            "username": user.username,
             "password": user.password,
+            "re_password": user.password,
             "email": user.email,
             "first_name": user.first_name,
             "last_name": user.last_name,
+            "phone_number": user.phone_number,
+            "sex": user.sex,
             "is_staff": user.is_staff
             }
-        response = self.client.post('http://localhost/accounts/register/', data)
+        response = self.client.post('http://127.0.0.1:8000/accounts/users/', data)
         pprint(vars(response.data))
         print(f'status_code: {response.status_code}')
         assert response.status_code == 201
@@ -62,7 +47,7 @@ class CalendarAdminViewSetTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123",
                                             is_staff=True
                                             )
@@ -90,7 +75,7 @@ class EventAdminViewSetTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123",
                                             is_staff=True
                                             )
@@ -121,7 +106,7 @@ class EventOwnedViewsetTestCase(APITestCase):
         self.factory = APIRequestFactory()
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.calendar = self.user.calendar
@@ -139,7 +124,7 @@ class EventOwnedViewsetTestCase(APITestCase):
         """Calendar name set to username by default."""
         response = self.client.get(reverse(self.calendar_url, kwargs={"pk": 1}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["name"], "test_user")
+        self.assertEqual(response.data["name"], "test@test.com")
 
     def test_userevent_detail_retrieve(self):
         event = self.get_event()
@@ -162,7 +147,7 @@ class CalendarOwnedViewSetTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.token = Token.objects.create(user=self.user)
@@ -176,7 +161,7 @@ class CalendarOwnedViewSetTestCase(APITestCase):
         response = self.client.get(reverse("calendar-detail", kwargs={"pk": 1}))
         print(response.status_code)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["name"], "test_user")
+        self.assertEqual(response.data["name"], "test@test.com")
 
 
 class EventMonthViewTestCase(APITestCase):
@@ -191,7 +176,7 @@ class EventMonthViewTestCase(APITestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.user = User.objects.create(
-                                        username="test_user",
+                                        email="test@test.com",
                                         password="TestPass123"
                                         )
         self.calendar = self.user.calendar
@@ -246,7 +231,7 @@ class EventListTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.calendar = self.user.calendar
@@ -298,7 +283,7 @@ class CurrentWeekTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.token = Token.objects.create(user=self.user)
@@ -391,7 +376,7 @@ class EventAllViewTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.calendar = self.user.calendar
@@ -435,7 +420,7 @@ class CurrentWeekAllViewTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-                                            username="test_user",
+                                            email="test@test.com",
                                             password="TestPass123"
                                             )
         self.calendar = self.user.calendar
