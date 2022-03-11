@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'django_jenkins'
     'djoser',
     'drf_multiple_model',
     'django_extensions',
